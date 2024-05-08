@@ -4,6 +4,7 @@ export const quoteSlice = createSlice({
   name: "quotes",
   initialState: {
     quoteObj: null,
+    color: "",
   },
 
   reducers: {
@@ -18,7 +19,9 @@ export const quoteSlice = createSlice({
     // },
     updateQuote: (state, action) => {
       state.quoteObj = action.payload;
+      state.color = Math.floor(Math.random() * 16777215).toString(16) + 40;
     },
+    // updateColor: (state) => {},
   },
 });
 

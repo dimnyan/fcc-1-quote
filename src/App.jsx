@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 function App() {
   const quote = useSelector((state) => state.quotes.quoteObj);
-  // const payload = useSelector((state) => state.counter.action.payload);
+  const bgColor = useSelector((state) => state.quotes.color);
   const dispatch = useDispatch();
 
   const handleUpdateQuote = () => {
@@ -15,6 +15,9 @@ function App() {
       .then((data) => {
         dispatch(updateQuote(data));
       });
+    // console.log(quote);
+    // dispatch(updateColor());
+    // document.body.style.backgroundColor = "#" + bgColor;
   };
 
   useEffect(() => {
@@ -23,11 +26,11 @@ function App() {
 
   // console.log(toLink(quote.content));
 
-  if (quote === null) {
+  if (quote === null || bgColor === null) {
     return <p>loading</p>;
   } else if (quote.content) {
     return (
-      <>
+      <div id="body" style={{ backgroundColor: "#" + bgColor }}>
         <div id="quote-box">
           <p id="text">{quote.content}</p>
           <p id="author">- {quote.author}</p>
@@ -38,14 +41,23 @@ function App() {
               )}" - ${quote.author}`}
               target="_blank"
             >
-              <button id="tweet-quote">Tweet Quote</button>
+              <button
+                id="tweet-quote"
+                style={{ backgroundColor: "#" + bgColor }}
+              >
+                Tweet Quote
+              </button>
             </a>
-            <button onClick={handleUpdateQuote} id="new-quote">
+            <button
+              onClick={handleUpdateQuote}
+              id="new-quote"
+              style={{ backgroundColor: "#" + bgColor }}
+            >
               Update Quote
             </button>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
@@ -53,5 +65,9 @@ function App() {
 function toLink(text) {
   return text.split(" ").join("%20");
 }
+
+// function randomColor() {
+//   return Math.floor(Math.random() * 16777215).toString(16);
+// }
 
 export default App;
