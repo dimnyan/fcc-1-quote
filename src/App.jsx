@@ -10,12 +10,18 @@ function App() {
   const dispatch = useDispatch();
 
   const handleUpdateQuote = () => {
-    fetch("https://api.quotable.io/random", { method: "GET" })
+    fetch("https://api.api-ninjas.com/v1/quotes", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": "1pktcC8EziQOYO7XHkHzRA==kaqW1kW2fjnDmF0f",
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
-        dispatch(updateQuote(data));
+        // console.log(data[0]);
+        dispatch(updateQuote(data[0]));
       });
-    // console.log(quote);
     // dispatch(updateColor());
     // document.body.style.backgroundColor = "#" + bgColor;
   };
@@ -28,16 +34,16 @@ function App() {
 
   if (quote === null || bgColor === null) {
     return <p>loading</p>;
-  } else if (quote.content) {
+  } else if (quote.quote) {
     return (
       <div id="body" style={{ backgroundColor: "#" + bgColor }}>
         <div id="quote-box">
-          <p id="text">{quote.content}</p>
+          <p id="text">{quote.quote}</p>
           <p id="author">- {quote.author}</p>
           <div id="buttons">
             <a
               href={`https://twitter.com/intent/tweet?text="${toLink(
-                quote.content
+                quote.quote
               )}" - ${quote.author}`}
               target="_blank"
             >
